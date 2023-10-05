@@ -9,6 +9,16 @@ export const isUserAuthenticated = () =>{
 
 }
 
+export const isProtectedRouteAuthenticated = () => {
+  let query = null;
+  let token = null;
+  if (typeof window !== 'undefined') {
+    query = new URLSearchParams(window.location.search);
+    token = query.get('jwt')
+  }
+  return { isAuthenticated: Boolean(token) || isUserAuthenticated(), query: query, token: token }
+}
+
 export const apiErrorHandler = (error: any) => {
     if (error.response) {
       const { status, data } = error.response;
